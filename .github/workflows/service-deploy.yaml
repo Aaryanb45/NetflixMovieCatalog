@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  EC2_PUBLIC_IP: 16.16.185.125 # TODO replace to your EC2 instance public IP
+  EC2_PUBLIC_IP: ec2-16-16-185-125.eu-north-1.compute.amazonaws.com # TODO replace to your EC2 instance public IP
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # TODO define this secret in your GitHub repo settings
 
 jobs:
@@ -21,8 +21,8 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > mykey.pem
           chmod 400 mykey.pem
-          cat mykey.pem
-          ls
+          
+          ls -a 
           # Copy the files from the current work dir into the EC2 instance, under `~/app`.
           scp -o StrictHostKeyChecking=no -i "mykey.pem" -r * ubuntu@$EC2_PUBLIC_IP:~/NetflixMovieCatalog/
           
